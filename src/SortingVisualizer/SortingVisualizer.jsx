@@ -1,5 +1,6 @@
 import React from 'react';
 import { getMergeSortAnimations } from '../sortingAlgorithms/sortingAlgorithms.js';
+import { getBubbleSortAnimations } from '../sortingAlgorithms/sortingAlgorithms.js';
 import './SortingVisualizer.css';
 
 // Change this value for the speed of the animations.
@@ -72,13 +73,35 @@ export default class SortingVisualizer extends React.Component {
   }
 
   bubbleSort() {
-    // We leave it as an exercise to the viewer of this code to implement this method.
+    const animations = getBubbleSortAnimations(this.state.array);
+    console.log(animations);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName('array-bar');
+      const isColorChange = i % 3 !== 2;
+      if (isColorChange) {
+        const [barOneIdx, barTwoIdx] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
+        const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+        }, i * ANIMATION_SPEED_MS);
+      } else {
+        setTimeout(() => {
+          const [barOneIdx, newHeight] = animations[i];
+          const barOneStyle = arrayBars[barOneIdx].style;
+          barOneStyle.height = `${newHeight}px`;
+        }, i * ANIMATION_SPEED_MS);
+      }
+    }
   }
 
   // NOTE: This method will only work if your sorting algorithms actually return
   // the sorted arrays; if they return the animations (as they currently do), then
   // this method will be broken.
-  testSortingAlgorithms() {
+
+  /* testSortingAlgorithms() {
     for (let i = 0; i < 100; i++) {
       const array = [];
       const length = randomIntFromInterval(1, 1000);
@@ -89,7 +112,7 @@ export default class SortingVisualizer extends React.Component {
       const mergeSortedArray = getMergeSortAnimations(array.slice());
       console.log(arraysAreEqual(javaScriptSortedArray, mergeSortedArray));
     }
-  }
+  } */
 
   render() {
     const { array } = this.state;
@@ -108,11 +131,11 @@ export default class SortingVisualizer extends React.Component {
         ))}
         <br />
         <br />
-        <button class="button" onClick={() => this.resetArray()}>Generate New Array</button>
+        <button class="button" onClick={() => this.resetArray()}>Shuffle Array</button>
         <button class="btn button" onClick={() => this.mergeSort()}>Merge Sort</button>
+        <button class="btn button" onClick={() => this.bubbleSort()}>Bubble Sort</button>
         {/* <button onClick={() => this.quickSort()}>Quick Sort</button>
         <button onClick={() => this.heapSort()}>Heap Sort</button>
-        <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
         <button onClick={() => this.testSortingAlgorithms()}>
           Test Sorting Algorithms (BROKEN)
         </button> */}
@@ -127,7 +150,7 @@ function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function arraysAreEqual(arrayOne, arrayTwo) {
+/* function arraysAreEqual(arrayOne, arrayTwo) {
   if (arrayOne.length !== arrayTwo.length) return false;
   for (let i = 0; i < arrayOne.length; i++) {
     if (arrayOne[i] !== arrayTwo[i]) {
@@ -135,4 +158,4 @@ function arraysAreEqual(arrayOne, arrayTwo) {
     }
   }
   return true;
-}
+} */

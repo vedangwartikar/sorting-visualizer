@@ -6,6 +6,42 @@ export function getMergeSortAnimations(array) {
   return animations;
 }
 
+export function getBubbleSortAnimations(array) {
+  const animations = [];
+  if (array.length <= 1) return array;
+  const auxiliaryArray = array.slice();
+  bubbleSort(array, auxiliaryArray, animations);
+  return animations;
+}
+
+// to be fixed
+function bubbleSort(
+  mainArray,
+  auxiliaryArray,
+  animations,
+) {
+  let i = 0;
+  let j = 0;
+  let k = 0;
+  while (i <= auxiliaryArray.length - 1) {
+    while (j <= auxiliaryArray.length) {
+      animations.push([i, j]);
+      animations.push([i, j]);
+      if (auxiliaryArray[i] <= auxiliaryArray[j]) {
+        animations.push([k, auxiliaryArray[i]]);
+        mainArray[k++] = auxiliaryArray[i];
+      }
+      else {
+        animations.push([k, auxiliaryArray[j]]);
+        mainArray[k++] = auxiliaryArray[j];
+
+        j++;
+      }
+      i++;
+    }
+  }
+}
+
 function mergeSortHelper(
   mainArray,
   startIdx,
