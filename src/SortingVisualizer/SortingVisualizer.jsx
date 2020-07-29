@@ -4,10 +4,10 @@ import { getBubbleSortAnimations } from '../sortingAlgorithms/sortingAlgorithms.
 import './SortingVisualizer.css';
 
 // Change this value for the speed of the animations.
-const ANIMATION_SPEED_MS = 1.5;
+const ANIMATION_SPEED_MS = 10;
 
 // Change this value for the number of bars (value) in the array.
-const NUMBER_OF_ARRAY_BARS = 110;
+const NUMBER_OF_ARRAY_BARS = 100;
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = 'grey';
@@ -15,7 +15,7 @@ const PRIMARY_COLOR = 'grey';
 // This is the color of array bars that are being compared throughout the animations.
 const SECONDARY_COLOR = 'red';
 
-// const SORTED_COLOR = 'green';
+const SORTED_COLOR = 'green';
 
 export default class SortingVisualizer extends React.Component {
   constructor(props) {
@@ -36,10 +36,19 @@ export default class SortingVisualizer extends React.Component {
       array.push(randomIntFromInterval(5, 550));
     }
     this.setState({ array });
+    for (let i = 0; i < this.state.array.length; i++) {
+      const arrayBars = document.getElementsByClassName('array-bar');
+      const barOneStyle = arrayBars[i].style;
+      setTimeout(() => {
+        barOneStyle.backgroundColor = PRIMARY_COLOR;
+      }, i * ANIMATION_SPEED_MS)
+    }
   }
 
   mergeSort() {
     const animations = getMergeSortAnimations(this.state.array);
+    console.log(animations);
+    console.log(this.state.array);
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
       const isColorChange = i % 3 !== 2;
@@ -62,7 +71,6 @@ export default class SortingVisualizer extends React.Component {
     }
     //barOneStyle.backgroundColor = SORTED_COLOR;
   }
-
 
   quickSort() {
     // We leave it as an exercise to the viewer of this code to implement this method.
@@ -97,6 +105,15 @@ export default class SortingVisualizer extends React.Component {
     }
   }
 
+  sorted() {
+    for (let i = 0; i < this.state.array.length; i++) {
+      const arrayBars = document.getElementsByClassName('array-bar');
+      const barOneStyle = arrayBars[i].style;
+      setTimeout(() => {
+        barOneStyle.backgroundColor = SORTED_COLOR;
+      }, i * ANIMATION_SPEED_MS)
+    }
+  }
   // NOTE: This method will only work if your sorting algorithms actually return
   // the sorted arrays; if they return the animations (as they currently do), then
   // this method will be broken.
@@ -133,7 +150,7 @@ export default class SortingVisualizer extends React.Component {
         <br />
         <button class="button" onClick={() => this.resetArray()}>Shuffle Array</button>
         <button class="btn button" onClick={() => this.mergeSort()}>Merge Sort</button>
-        <button class="btn button" onClick={() => this.bubbleSort()}>Bubble Sort</button>
+        <button class="btn button" onClick={() => this.sorted()}>Bubble Sort</button>
         {/* <button onClick={() => this.quickSort()}>Quick Sort</button>
         <button onClick={() => this.heapSort()}>Heap Sort</button>
         <button onClick={() => this.testSortingAlgorithms()}>
