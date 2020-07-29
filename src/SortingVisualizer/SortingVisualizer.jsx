@@ -4,7 +4,8 @@ import { getBubbleSortAnimations } from '../sortingAlgorithms/sortingAlgorithms.
 import './SortingVisualizer.css';
 
 // Change this value for the speed of the animations.
-const ANIMATION_SPEED_MS = 10;
+const SORT_SPEED_MS = 1.5;
+const ANIMATION_SPEED_MS = 5;
 
 // Change this value for the number of bars (value) in the array.
 const NUMBER_OF_ARRAY_BARS = 100;
@@ -45,10 +46,10 @@ export default class SortingVisualizer extends React.Component {
     }
   }
 
-  mergeSort() {
+  async mergeSort() {
     const animations = getMergeSortAnimations(this.state.array);
-    console.log(animations);
-    console.log(this.state.array);
+    /* console.log(animations);
+    console.log(this.state.array); */
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
       const isColorChange = i % 3 !== 2;
@@ -60,15 +61,24 @@ export default class SortingVisualizer extends React.Component {
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
           barTwoStyle.backgroundColor = color;
-        }, i * ANIMATION_SPEED_MS);
+        }, i * SORT_SPEED_MS);
       } else {
         setTimeout(() => {
           const [barOneIdx, newHeight] = animations[i];
           const barOneStyle = arrayBars[barOneIdx].style;
           barOneStyle.height = `${newHeight}px`;
-        }, i * ANIMATION_SPEED_MS);
+        }, i * SORT_SPEED_MS);
       }
     }
+
+    /* for (let i = 0; i < this.state.array.length; i++) {
+      const arrayBars = document.getElementsByClassName('array-bar');
+      const barOneStyle = arrayBars[i].style;
+      setTimeout(() => {
+        barOneStyle.backgroundColor = SORTED_COLOR;
+      }, i * ANIMATION_SPEED_MS)
+    } */
+
     //barOneStyle.backgroundColor = SORTED_COLOR;
   }
 
@@ -150,7 +160,10 @@ export default class SortingVisualizer extends React.Component {
         <br />
         <button class="button" onClick={() => this.resetArray()}>Shuffle Array</button>
         <button class="btn button" onClick={() => this.mergeSort()}>Merge Sort</button>
+        {/* <button class="btn button" onClick={() => this.mergeSort().then(() => this.sorted())}>Merge Sort</button> */}
+        {/* <div>{() => this.sorted()}</div> */}
         <button class="btn button" onClick={() => this.sorted()}>Bubble Sort</button>
+        {/* <div> {this.sorted()} </div> */}
         {/* <button onClick={() => this.quickSort()}>Quick Sort</button>
         <button onClick={() => this.heapSort()}>Heap Sort</button>
         <button onClick={() => this.testSortingAlgorithms()}>
