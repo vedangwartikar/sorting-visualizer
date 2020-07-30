@@ -147,7 +147,7 @@ export default class SortingVisualizer extends React.Component {
     setTimeout(() => {
       const animations = getBubbleSortAnimations(this.state.array);
       this.animationHelper(animations);
-    }, 500);
+    });
   }
 
   sorted() {
