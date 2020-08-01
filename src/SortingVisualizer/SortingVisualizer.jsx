@@ -50,8 +50,6 @@ export default class SortingVisualizer extends React.Component {
   animationHelper(animations) {
     const arrayBars = document.getElementsByClassName("array-bar");
 
-    // this.postAnimation();
-
     for (let i = 0; i < animations.length; i++) {
       const [barOneIndex, barTwoIndex] = animations[i];
       const barOneStyle = arrayBars[barOneIndex].style;
@@ -76,7 +74,7 @@ export default class SortingVisualizer extends React.Component {
     }
   }
 
-  postAnimation(length, speedF) {
+  postAnimation() {
     setTimeout(() => {
       const arrayBars = document.getElementsByClassName("array-bar");
       for (let i = 0; i < this.state.array.length; i++) {
@@ -86,14 +84,15 @@ export default class SortingVisualizer extends React.Component {
         }, i * 10);
       }
 
-      setTimeout(() => {
+      /* setTimeout(() => {
         for (let i = 0; i < this.state.array.length; i++) {
           arrayBars[i].style.backgroundColor = "#20232a";
         }
-        //document.getElementsByClassName("bar-section")[0].style.boxShadow = "inset 0px 5px 6px 7px #20232a";
-        //this.enableButtons();
+        document.getElementsByClassName("bar-section")[0].style.boxShadow = "inset 0px 5px 6px 7px #20232a";
+        this.enableButtons();
       }, (this.state.array.length * 10) + 1000);
-    }, (length + 1) * speedF + 1000);
+    }, (length + 1) * speedF + 1000); */
+    })
   }
 
   //Merge sort 
@@ -148,6 +147,7 @@ export default class SortingVisualizer extends React.Component {
       const animations = getBubbleSortAnimations(this.state.array);
       this.animationHelper(animations);
     });
+    return;
   }
 
   sorted() {
@@ -182,7 +182,9 @@ export default class SortingVisualizer extends React.Component {
     return (
       <div className="array-container">
         <h1>Sorting Visualizer</h1>
-        <h2>Still in development...</h2>
+        <div className="dev">
+          <h2>Still in development...</h2>
+        </div>
         {array.map((value, idx) => (
           <div
             className="array-bar"
@@ -194,18 +196,20 @@ export default class SortingVisualizer extends React.Component {
         ))}
         <br />
         <br />
-        <button class="button" onClick={() => this.resetArray()}>Shuffle Array</button>
-        <button class="btn button" onClick={() => this.mergeSort()}>Merge Sort</button>
-        {/* <button class="btn button" onClick={() => this.mergeSort().then(() => this.sorted())}>Merge Sort</button> */}
-        {/* <div>{() => this.sorted()}</div> */}
-        <button class="btn button" onClick={() => this.bubbleSort()}>Bubble Sort</button>
-        {/* <div> {this.sorted()} </div> */}
-        {/* <button onClick={() => this.quickSort()}>Quick Sort</button>
-        <button onClick={() => this.heapSort()}>Heap Sort</button>
-        <button onClick={() => this.testSortingAlgorithms()}>
-        Test Sorting Algorithms (BROKEN)
-      </button> */}
-        <button class="btn button" onClick={() => this.sorted()}>Sorted</button>
+        <div className="buttons">
+          <button class="button" onClick={() => this.resetArray()}>Shuffle Array</button>
+          <button class="btn button" onClick={() => this.mergeSort()}>Merge Sort</button>
+          {/* <button class="btn button" onClick={() => this.mergeSort().then(() => this.sorted())}>Merge Sort</button> */}
+          {/* <div>{() => this.sorted()}</div> */}
+          <button class="btn button" onClick={() => this.bubbleSort()}>Bubble Sort</button>
+          {/* <div> {this.sorted()} </div> */}
+          {/* <button onClick={() => this.quickSort()}>Quick Sort</button>
+          <button onClick={() => this.heapSort()}>Heap Sort</button>
+          <button onClick={() => this.testSortingAlgorithms()}>
+          Test Sorting Algorithms (BROKEN)
+        </button> */}
+          <button class="btn button" onClick={() => this.sorted()}>Sorted</button>
+        </div>
       </div>
     );
   }
