@@ -3,7 +3,7 @@ import { getMergeSortAnimations, getBubbleSortAnimations, getInsertionSortAnimat
 import './SortingVisualizer.css';
 
 // Change this value for the speed of the animations.
-const SORT_SPEED_MS = 100;
+const SORT_SPEED_MS = 1.5;
 const ANIMATION_SPEED_MS = 5;
 
 // Change this value for the number of bars (value) in the array.
