@@ -1,12 +1,20 @@
 import React from 'react';
-import { getMergeSortAnimations, getBubbleSortAnimations } from '../sortingAlgorithms/sortingAlgorithms.js';
+import { getMergeSortAnimations, getBubbleSortAnimations, getInsertionSortAnimations } from '../sortingAlgorithms/sortingAlgorithms.js';
 import './SortingVisualizer.css';
 
 // Change this value for the speed of the animations.
-const SORT_SPEED_MS = 1.5;
+const SORT_SPEED_MS = 100;
 const ANIMATION_SPEED_MS = 5;
 
 // Change this value for the number of bars (value) in the array.
+/* var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+var element = document.getElementById('text');
+if (isMobile) {
+  element.innerHTML = "You are using Mobile";
+} else {
+  element.innerHTML = "You are using Desktop";
+} */
+
 const NUMBER_OF_ARRAY_BARS = 100;
 
 // This is the main color of the array bars.
@@ -137,6 +145,7 @@ export default class SortingVisualizer extends React.Component {
     // We leave it as an exercise to the viewer of this code to implement this method.
   }
 
+
   heapSort() {
     // We leave it as an exercise to the viewer of this code to implement this method.
   }
@@ -145,6 +154,14 @@ export default class SortingVisualizer extends React.Component {
     // this.disableButtons();
     setTimeout(() => {
       const animations = getBubbleSortAnimations(this.state.array);
+      this.animationHelper(animations);
+    });
+    return;
+  }
+
+  insertionSort() {
+    setTimeout(() => {
+      const animations = getInsertionSortAnimations(this.state.array);
       this.animationHelper(animations);
     });
     return;
@@ -202,6 +219,7 @@ export default class SortingVisualizer extends React.Component {
           {/* <button class="btn button" onClick={() => this.mergeSort().then(() => this.sorted())}>Merge Sort</button> */}
           {/* <div>{() => this.sorted()}</div> */}
           <button class="btn button" onClick={() => this.bubbleSort()}>Bubble Sort</button>
+          <button class="btn button" onClick={() => this.insertionSort()}>Insertion Sort</button>
           {/* <div> {this.sorted()} </div> */}
           {/* <button onClick={() => this.quickSort()}>Quick Sort</button>
           <button onClick={() => this.heapSort()}>Heap Sort</button>
