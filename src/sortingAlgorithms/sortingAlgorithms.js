@@ -1,40 +1,10 @@
+//-----------------------------  MERGE SORT  -----------------------------
+
 export function getMergeSortAnimations(array) {
   const animations = [];
   if (array.length <= 1) return array;
   const auxiliaryArray = array.slice();
   mergeSortHelper(array, 0, array.length - 1, auxiliaryArray, animations);
-  return animations;
-}
-
-export function getBubbleSortAnimations(array) {
-  let animations = [];
-  for (let i = 0; i < array.length; i++) {
-    for (let j = 0; j < array.length - i - 1; j++) {
-      if (array[j] > array[j + 1]) {
-        let temp = array[j];
-        animations.push([j, j + 1]);
-        animations.push([j, j + 1]);
-        array[j] = array[j + 1];
-        array[j + 1] = temp;
-      }
-    }
-  }
-  return animations;
-}
-
-export function getInsertionSortAnimations(array) {
-  let animations = [];
-  for (let i = 1; i < array.length; i++) {
-    let j = i - 1;
-    let temp = array[i];
-    while (temp < array[j] && j >= 0) {
-      array[j + 1] = array[j]
-      animations.push([j + 1, j]);
-      animations.push([j + 1, j]);
-      j--;
-    }
-    array[j + 1] = temp;
-  }
   return animations;
 }
 
@@ -106,6 +76,62 @@ function doMerge(
     animations.push([k, auxiliaryArray[j]]);
     mainArray[k++] = auxiliaryArray[j++];
   }
+}
+
+//-----------------------------  BUBBLE SORT  -----------------------------
+
+export function getBubbleSortAnimations(array) {
+  let animations = [];
+  for (let i = 0; i < array.length; i++) {
+    for (let j = 0; j < array.length - i - 1; j++) {
+      if (array[j] > array[j + 1]) {
+        let temp = array[j];
+        animations.push([j, j + 1]);
+        animations.push([j, j + 1]);
+        array[j] = array[j + 1];
+        array[j + 1] = temp;
+      }
+    }
+  }
+  return animations;
+}
+
+//-----------------------------  INSERTION SORT  -----------------------------
+
+export function getInsertionSortAnimations(array) {
+  let animations = [];
+  for (let i = 1; i < array.length; i++) {
+    let j = i - 1;
+    let temp = array[i];
+    while (temp < array[j] && j >= 0) {
+      array[j + 1] = array[j]
+      animations.push([j + 1, j]);
+      animations.push([j + 1, j]);
+      j--;
+    }
+    array[j + 1] = temp;
+  }
+  return animations;
+}
+
+//-----------------------------  SELECTION SORT  -----------------------------
+
+export function getSelectionSortAnimations(array) {
+  let animations = [];
+  for (let i = 0; i < array.length; i++) {
+    let minIndex = i;
+    for (let j = i + 1; j < array.length; j++) {
+      if (array[minIndex] > array[j]) {
+        minIndex = j;
+      }
+    }
+    animations.push([i, minIndex]);
+    animations.push([i, minIndex]);
+    let temp = array[minIndex];
+    array[minIndex] = array[i];
+    array[i] = temp;
+  }
+  return animations;
 }
 
 /* (function ($) {

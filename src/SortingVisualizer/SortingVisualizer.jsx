@@ -1,5 +1,5 @@
 import React from 'react';
-import { getMergeSortAnimations, getBubbleSortAnimations, getInsertionSortAnimations } from '../sortingAlgorithms/sortingAlgorithms.js';
+import { getMergeSortAnimations, getBubbleSortAnimations, getInsertionSortAnimations, getSelectionSortAnimations } from '../sortingAlgorithms/sortingAlgorithms.js';
 import './SortingVisualizer.css';
 
 // Change this value for the speed of the animations.
@@ -55,7 +55,7 @@ export default class SortingVisualizer extends React.Component {
 
   // Animation to swap
 
-  animationHelper(animations) {
+  animationHelper(animations, speed = SORT_SPEED_MS) {
     const arrayBars = document.getElementsByClassName("array-bar");
 
     for (let i = 0; i < animations.length; i++) {
@@ -70,14 +70,14 @@ export default class SortingVisualizer extends React.Component {
           let tempHeight = barOneStyle.height;
           barOneStyle.height = barTwoStyle.height;
           barTwoStyle.height = tempHeight;
-        }, (i + 1) * SORT_SPEED_MS);
+        }, (i + 1) * speed);
       }
       else {
         setTimeout(() => {
           animations.pop();
           barOneStyle.backgroundColor = PRIMARY_COLOR;
           barTwoStyle.backgroundColor = PRIMARY_COLOR;
-        }, (i + 1) * SORT_SPEED_MS);
+        }, (i + 1) * speed);
       }
     }
   }
@@ -141,14 +141,6 @@ export default class SortingVisualizer extends React.Component {
     //barOneStyle.backgroundColor = SORTED_COLOR;
   }
 
-  quickSort() {
-    // We leave it as an exercise to the viewer of this code to implement this method.
-  }
-
-
-  heapSort() {
-    // We leave it as an exercise to the viewer of this code to implement this method.
-  }
 
   bubbleSort() {
     // this.disableButtons();
@@ -164,8 +156,24 @@ export default class SortingVisualizer extends React.Component {
       const animations = getInsertionSortAnimations(this.state.array);
       this.animationHelper(animations);
     });
-    return;
   }
+
+  selectionSort() {
+    setTimeout(() => {
+      const animations = getSelectionSortAnimations(this.state.array);
+      this.animationHelper(animations, 30);
+    });
+  }
+
+  quickSort() {
+    // We leave it as an exercise to the viewer of this code to implement this method.
+  }
+
+
+  heapSort() {
+    // We leave it as an exercise to the viewer of this code to implement this method.
+  }
+  return;
 
   sorted() {
     for (let i = 0; i < this.state.array.length; i++) {
@@ -176,22 +184,6 @@ export default class SortingVisualizer extends React.Component {
       }, i * ANIMATION_SPEED_MS)
     }
   }
-  // NOTE: This method will only work if your sorting algorithms actually return
-  // the sorted arrays; if they return the animations (as they currently do), then
-  // this method will be broken.
-
-  /* testSortingAlgorithms() {
-    for (let i = 0; i < 100; i++) {
-      const array = [];
-      const length = randomIntFromInterval(1, 1000);
-      for (let i = 0; i < length; i++) {
-        array.push(randomIntFromInterval(-1000, 1000));
-      }
-      const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
-      const mergeSortedArray = getMergeSortAnimations(array.slice());
-      console.log(arraysAreEqual(javaScriptSortedArray, mergeSortedArray));
-    }
-  } */
 
   render() {
     const { array } = this.state;
@@ -220,6 +212,7 @@ export default class SortingVisualizer extends React.Component {
           {/* <div>{() => this.sorted()}</div> */}
           <button class="btn button" onClick={() => this.bubbleSort()}>Bubble Sort</button>
           <button class="btn button" onClick={() => this.insertionSort()}>Insertion Sort</button>
+          <button class="btn button" onClick={() => this.selectionSort()}>Selection Sort</button>
           {/* <div> {this.sorted()} </div> */}
           {/* <button onClick={() => this.quickSort()}>Quick Sort</button>
           <button onClick={() => this.heapSort()}>Heap Sort</button>
